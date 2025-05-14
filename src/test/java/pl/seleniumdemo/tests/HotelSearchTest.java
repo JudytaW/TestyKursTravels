@@ -12,15 +12,12 @@ public class HotelSearchTest extends BaseTest {
     @Test
     public void searchHotelTest() throws InterruptedException {
 
-        HotelSearchPage hotelSearchPage= new HotelSearchPage(driver);
-        hotelSearchPage.setCity("London");
-        hotelSearchPage.setDates("27/04/2026", "29/04/2026");
-        hotelSearchPage.setTravellers(1,2);
-        hotelSearchPage.performSearch();
-
-        ResultsPage resultsPage= new ResultsPage(driver);
-
-        List<String> hotelNames = resultsPage.getHotelNames();
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        // zapis fluent
+        List<String> hotelNames = hotelSearchPage.setCity("London")
+                .setDates("27/04/2026", "29/04/2026")
+                .setTravellers(1, 2)
+                .performSearch().getHotelNames();
 
         //System.out.println(hotelNames.size());
         //hotelNames.forEach(el-> System.out.println(el));
@@ -28,32 +25,22 @@ public class HotelSearchTest extends BaseTest {
         hotelNames.forEach(System.out::println);
 
         Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
-        Assert.assertEquals( hotelNames.get(1), "Oasis Beach Tower");
-        Assert.assertEquals( hotelNames.get(2), "Rose Rayhaan Rotana");
-        Assert.assertEquals( hotelNames.get(3), "Hyatt Regency Perth");
+        Assert.assertEquals(hotelNames.get(1), "Oasis Beach Tower");
+        Assert.assertEquals(hotelNames.get(2), "Rose Rayhaan Rotana");
+        Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
 
     }
 
     @Test
     public void searchHotelWithoutNameTest() throws InterruptedException {
 
-        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.setDates("25/04/2026", "30/04/2026");
-        hotelSearchPage.setTravellers(0,1);
-        hotelSearchPage.performSearch();
+        ResultsPage resultsPage = new HotelSearchPage(driver)
+                .setDates("25/04/2026", "30/04/2026")
+                .setTravellers(0, 1)
+                .performSearch();
 
-
-       /* driver.findElements(By.xpath("//td[@class='day ' and text()='30']"))
-                .stream()
-                .filter(WebElement::isDisplayed)
-                .findFirst()
-                .ifPresent(WebElement::click);*/
-
-        ResultsPage resultsPage = new ResultsPage(driver);
-
-        //Assert.assertTrue(noResultHeading.isDisplayed());
         Assert.assertTrue(resultsPage.resultHeading.isDisplayed());
-        Assert.assertEquals(resultsPage.getHeadingText(),"No Results Found");
+        Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
 
     }
 
