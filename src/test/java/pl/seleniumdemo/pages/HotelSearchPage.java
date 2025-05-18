@@ -50,13 +50,11 @@ public class HotelSearchPage {
         this.driver = driver;
     }
 
-    //void nic nie zwraca dlatego zmieniamimy na HotelSearchPage
     public HotelSearchPage setCity(String cityName) {
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         driver.findElement(By.xpath(xpath)).click();
-        //zwracamy this czyli obiekt tej klasy
         return this;
     }
 
@@ -84,10 +82,9 @@ public class HotelSearchPage {
         return new ResultsPage(driver);
     }
 
-    public SignUpPage openSignUpForm() {
+    public void openSignUpForm() {
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLInk.get(1).click();
-        return new SignUpPage(driver);
     }
 
 }

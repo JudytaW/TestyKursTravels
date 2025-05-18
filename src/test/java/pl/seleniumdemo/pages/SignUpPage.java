@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pl.seleniumdemo.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,42 +39,34 @@ public class SignUpPage {
 
     public SignUpPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
-    public SignUpPage setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         firstNameInput.sendKeys(firstName);
-        return this;
     }
 
-    public SignUpPage setLastName(String lastName) {
+    public void setLastName(String lastName) {
         lastNameInput.sendKeys(lastName);
-        return this;
     }
 
-    public SignUpPage setPhone(String phone) {
+    public void setPhone(String phone) {
         phoneInput.sendKeys(phone);
-        return this;
     }
 
-    public SignUpPage setEmail(String email) {
+    public void setEmail(String email) {
         emailInput.sendKeys(email);
-        return this;
     }
 
-    public SignUpPage setPassword(String password) {
+    public void setPassword(String password) {
         passwordInput.sendKeys(password);
-        return this;
     }
 
-    public SignUpPage setConfirmpassword(String confirmpassword) {
+    public void setConfirmpassword(String confirmpassword) {
         confirmpasswordInput.sendKeys(confirmpassword);
-        return this;
     }
 
-    public LoggedUserPage SignUp() {
+    public void SignUp() {
         signUpButton.click();
-        return new LoggedUserPage(driver);
     }
 
     public List<String> getErrors() {
@@ -81,6 +74,24 @@ public class SignUpPage {
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
+
+    /*public void fillSignUpForm(String firstName, String lastName, String phone, String email, String password) {
+        firstNameInput.sendKeys(firstName);
+        lastNameInput.sendKeys(lastName);
+        phoneInput.sendKeys(phone);
+        passwordInput.sendKeys(password);
+        confirmpasswordInput.sendKeys(password);
+        signUpButton.click();
+    }
+
+    public void fillSignUpForm(User user) {
+        firstNameInput.sendKeys(user.getFirstName());
+        lastNameInput.sendKeys(user.getLastName());
+        phoneInput.sendKeys(user.getPhone());
+        passwordInput.sendKeys(user.getPassword());
+        confirmpasswordInput.sendKeys(user.getPassword());
+        signUpButton.click();
+    }*/
 
 
 }
