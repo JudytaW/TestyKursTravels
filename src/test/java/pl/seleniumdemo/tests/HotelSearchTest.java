@@ -10,20 +10,19 @@ import java.util.List;
 public class HotelSearchTest extends BaseTest {
 
     @Test
-    public void searchHotelTest() throws InterruptedException {
+    public void searchHotelTest() {
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        // zapis fluent
-        List<String> hotelNames = hotelSearchPage
-                .setCity("London")
-                .setDates("27/04/2026", "29/04/2026")
-                .setTravellers(1, 2)
-                .performSearch().getHotelNames();
+        hotelSearchPage.setCity("Dubai");
+        hotelSearchPage.setDates("27/04/2026", "29/04/2026");
+        hotelSearchPage.setTravellers(1, 2);
+        hotelSearchPage.performSearch();
 
         //System.out.println(hotelNames.size());
         //hotelNames.forEach(el-> System.out.println(el));
 
-        hotelNames.forEach(System.out::println);
+        ResultsPage resultsPage = new ResultsPage(driver);
+        List<String> hotelNames = resultsPage.getHotelNames();
 
         Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
         Assert.assertEquals(hotelNames.get(1), "Oasis Beach Tower");
